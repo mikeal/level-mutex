@@ -2,6 +2,14 @@
 
 `npm install level-mutex`
 
+#### What is this?
+
+`level-mutex` is an abstract "lock" around a `levelup` store. What it does is cycle between reads and writes, allowing all writes to return in order while queuing all reads, the running all reads and returning in order, then writing all the pending reads again. `level-mutex` uses node.js' single threaded nature to your advantage so that you can maintain a higher order locking structure to insure various types of read-on-write consistency semantics.
+
+This is currently used in [couchup](http://github.com/mikeal/couchup) to ensure users cannot update a document without providing the latest revision.
+
+While you do scope `level-mutex` to a single levelup store there is nothing stopping you from having many mutexes around the same store provided you're using each to manage a separate higher order consistency guarantee. For instance, `couchup` uses a mutex *per database* and an indefinite number of databases might exist in a single levelup store.
+
 ```javascript
 var levelup = require('levelup')
   , mutex = require('level-mutex')
