@@ -1,6 +1,6 @@
 {
   "name": "level-mutex",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Mutex read/write lock for levelup.",
   "main": "index.js",
   "dependencies": {
