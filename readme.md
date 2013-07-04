@@ -2,7 +2,7 @@
 
 `npm install level-mutex`
 
-```javscript
+```javascript
 var levelup = require('levelup')
   , mutex = require('level-mutex')
   ;
