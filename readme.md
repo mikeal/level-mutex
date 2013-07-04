@@ -4,7 +4,7 @@
 
 #### What is this?
 
-`level-mutex` is an abstract "lock" around a `levelup` store. What it does is cycle between reads and writes, allowing all writes to return in order while queuing all reads, the running all reads and returning in order, then writing all the pending reads again. `level-mutex` uses node.js' single threaded nature to your advantage so that you can maintain a higher order locking structure to insure various types of read-on-write consistency semantics.
+`level-mutex` is an abstract "lock" around a `levelup` store. What it does is cycle between reads and writes, allowing all writes to return in order while queuing all reads, then running all reads and returning in order, then writing all the pending writes again. `level-mutex` uses node.js' single threaded nature to your advantage so that you can maintain a higher order locking structure to insure various types of read-on-write consistency semantics.
 
 This is currently used in [couchup](http://github.com/mikeal/couchup) to ensure users cannot update a document without providing the latest revision.
 
