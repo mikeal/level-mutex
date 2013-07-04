@@ -14,7 +14,7 @@ var store = levelup('./testdb')
 
 function write (key, revision, value, cb) {
   mymutex.get('key', function (e, val) {
-    // verify that the revision being written is the current on in the database
+    // verify that the revision being written is the current one in the database
     if (e || value.revision !=== revision) return cb(new Error('rev is out of date'))
     // if this key is being written then nobody has read it yet which means
     // someone writing it can't be writing to the new revision
@@ -22,7 +22,7 @@ function write (key, revision, value, cb) {
     pending.push(key)
     // bump the rev
     value.revision = value.revision + 1
-    mymutex.write(key, value, function (e) {
+    mymutex.put(key, value, function (e) {
       if (e) return cb(e)
       cb(null, {rev:value.revision})
     })
