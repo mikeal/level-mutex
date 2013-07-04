@@ -1,0 +1,33 @@
+{
+  "name": "level-mutex",
+  "version": "0.0.0",
+  "description": "Mutex read/write lock for levelup.",
+  "main": "index.js",
+  "dependencies": {
+    "level-peek": "~1.0.6"
+  },
+  "devDependencies": {
+    "cleanup": "~0.3.0",
+    "okdone": "~0.3.0",
+    "async": "~0.2.9",
+    "rimraf": "~2.2.0",
+    "levelup": "~0.10.0",
+    "leveldown": "~0.6.1"
+  },
+  "scripts": {
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mikeal/level-mutex"
+  },
+  "keywords": [
+    "level",
+    "leveldb",
+    "lock",
+    "mutex",
+    "transaction"
+  ],
+  "author": "Mikeal Rogers",
+  "license": "BSD"
+}
