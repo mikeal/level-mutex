@@ -24,6 +24,14 @@ function parallel (arr, cb) {
   if (arr.length === 0) cb()
 }
 
+function extend(a, b) {
+  var keys = Object.keys(b)
+  for (var i = 0; i < keys.length; i++) {
+    var key = keys[i]
+    a[key] = b[key]
+  }
+}
+
 function Mutex (lev) {
   this.lev = lev
   this.writing = false
@@ -32,18 +40,34 @@ function Mutex (lev) {
   this.reads = []
 }
 util.inherits(Mutex, events.EventEmitter)
-Mutex.prototype.put = function (key, value, cb) {
-  this.writes.push([{type:'put', key:key, value:value}, cb])
+Mutex.prototype.put = function (key, value, opts, cb) {
+  if (typeof opts === 'function') {
+    cb = opts
+    opts = undefined
+  }
+  var write = {type:'put', key:key, value:value}
+  if (opts) extend(write, opts)
+  this.writes.push([write, cb])
   this.kick()
 }
-Mutex.prototype.get = function (key, cb) {
+Mutex.prototype.get = function (key, opts, cb) {
+  if (typeof opts === 'function') {
+    cb = opts
+    opts = {}
+  }
   var self = this
-  this.reads.push([function (_cb) { self.lev.get(key, _cb) }, cb])
+  this.reads.push([function (_cb) { self.lev.get(key, opts, _cb) }, cb])
   this.kick()
 }
-Mutex.prototype.del = function (key, cb) {
+Mutex.prototype.del = function (key, opts, cb) {
+  if (typeof opts === 'function') {
+    cb = opts
+    opts = undefined
+  }
   if (!cb) throw new Error('no cb')
-  this.writes.push([{type:'del', key:key}, cb])
+  var del = {type:'del', key:key}
+  if (opts) extend(del, opts)
+  this.writes.push([del, cb])
   this.kick()
 }
 Mutex.prototype.peekLast = function (opts, cb) {
