@@ -1,5 +1,7 @@
 ### level-mutex
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/mikeal/level-mutex.svg)](https://greenkeeper.io/)
+
 `npm install level-mutex`
 
 #### What is this?
